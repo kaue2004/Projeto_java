@@ -27,13 +27,16 @@ public class consultausuario extends javax.swing.JFrame {
         UsuarioDAO dao = new UsuarioDAO();
         
         List<Usuario> lista = new ArrayList<>();
-        lista = dao.ListaCombo();
+        lista = dao.ListaUsuario();
+        jComboBox1.addItem("Selecione o usuário");
         
         for(Usuario u: lista){
-            jComboBox1.addItem(u.getNome());
+            int a = u.getId();
+            jComboBox1.addItem(a+" - "+u.getNome());
         }
         
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,6 +73,11 @@ public class consultausuario extends javax.swing.JFrame {
         });
 
         jButton2.setText("Deletar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,6 +126,19 @@ public class consultausuario extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int cod = Integer.parseInt(jTextField1.getText());
+        Usuario usuario = new Usuario();
+        UsuarioDAO dao = new UsuarioDAO();
+        
+        usuario.setId(cod);
+        
+        dao.ExcluirUsuario(usuario);
+        
+        new CadastroUsuario().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -42,25 +42,7 @@ public class UsuarioDAO {
         }
     }
     
-    public void removeUsuario(){
-        
-      String Sql = "DELETE FROM usuario";
-           
-        try {
-            PreparedStatement  stmt = connection.prepareStatement(Sql);
-            
-           
-            stmt.execute();
-            stmt.close();
-             JOptionPane.showMessageDialog(null, "limpou");
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-       
-    }
-    
-        public List<Usuario> ListaCombo(){
+       public List<Usuario> ListaUsuario(){
     
         String sql = "SELECT * FROM usuario ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
@@ -85,6 +67,23 @@ public class UsuarioDAO {
         }catch(Exception ex){
            return null;
         }
+    }
+       public String ExcluirUsuario(Usuario u){
+        String sql = "DELETE FROM usuario WHERE id = ?";
+        
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, u.getId());
+            
+            if(stmt.executeUpdate() > 0){
+                return "Excluido com sucesso!";
+            }else{
+                return "Erro ao excluir!";
+            }
+            
+        } catch (SQLException ex) {
+            return ex.getMessage();
+        }
+    }
+}
 
-
-        }}
